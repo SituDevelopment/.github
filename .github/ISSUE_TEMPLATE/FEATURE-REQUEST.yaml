@@ -30,6 +30,10 @@ body:
       label: Alternative Solutions
       description: A clear and concise description of any alternative solutions or features you've considered.
       placeholder: Alternative solutions
+  - type: markdown
+    attributes:
+      value: |
+        ## Optional
   - type: textarea
     id: additional-context
     attributes:

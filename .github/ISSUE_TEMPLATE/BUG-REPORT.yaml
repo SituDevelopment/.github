@@ -76,6 +76,5 @@ body:
   - type: markdown
     id: additional-context
     attributes:
-      label: Additional context
       value: |
         ## Optional

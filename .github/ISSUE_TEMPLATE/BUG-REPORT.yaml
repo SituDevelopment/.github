@@ -74,7 +74,11 @@ body:
       label: Screenshots
       description: If applicable, add screenshots to help explain your problem.
   - type: markdown
-    id: additional-context
     attributes:
       value: |
         ## Optional
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.

@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    assignees:
+    reviewers:
       - "Sassiest01"
       - "willsawyerrrr"
     directory: "/"
@@ -14,7 +14,7 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "npm"
-    assignees:
+    reviewers:
       - "Sassiest01"
       - "willsawyerrrr"
     directory: "/"
@@ -22,7 +22,7 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "github-actions"
-    assignees:
+    reviewers:
       - "Sassiest01"
       - "willsawyerrrr"
     directory: "/.github/workflows"

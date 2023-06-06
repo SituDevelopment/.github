@@ -14,11 +14,17 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "npm"
+    assignees:
+      - "Sassiest01"
+      - "willsawyerrrr"
     directory: "/"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "github-actions"
+    assignees:
+      - "Sassiest01"
+      - "willsawyerrrr"
     directory: "/.github/workflows"
     schedule:
       interval: "weekly"

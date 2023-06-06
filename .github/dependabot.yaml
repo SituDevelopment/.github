@@ -6,6 +6,9 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
+    assignees:
+      - "Sassiest01"
+      - "willsawyerrrr"
     directory: "/"
     schedule:
       interval: "weekly"

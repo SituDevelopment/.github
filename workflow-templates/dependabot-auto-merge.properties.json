@@ -1,4 +1,4 @@
 {
-  "name": "Dependabot Auto Merge",
-  "description": "Automatically merges pull requests opened by Dependabot."
+    "name": "Dependabot Auto Merge",
+    "description": "Automatically merges pull requests opened by Dependabot."
 }

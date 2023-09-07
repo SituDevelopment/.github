@@ -1,0 +1,4 @@
+{
+    "name": "Check Code Style",
+    "description": "Status check to ensure the codebase conforms to a required code style."
+}

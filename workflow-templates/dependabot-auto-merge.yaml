@@ -12,4 +12,4 @@ jobs:
           target:
             patch
             minor
-          github-token: ${{ secrets.dependabot_auto_merge_pat }}
+          github-token: ${{ secrets.DEPENDABOT_AUTO_MERGE_PAT }}

@@ -18,6 +18,7 @@ jobs:
           chmod +x find-by-extension
       - id: find-python
         run: |
+          ls
           ./find-by-extension ".py"
           if [ $? -eq 0 ]; then
             echo "result=true" >> "$GITHUB_OUTPUT"

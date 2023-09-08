@@ -13,11 +13,9 @@ jobs:
       web: ${{ steps.find-web.outputs.result }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: "SituDevelopment/automation"
-          sparse-checkout: "find-by-extension"
-          token: ${{ github.token }}
+      - run: |
+          curl -H "Authorization: token ${{ github.token }}" https://raw.githubusercontent.com/SituDevelopment/automation/main/find-by-extension -o find-by-extension
+          chmod +x find-by-extension
       - id: find-python
         run: |
           find-by-extension ".py" > /dev/null

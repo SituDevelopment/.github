@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: "SituDevelopment/automation"
+          sparse-checkout: "find-by-extension"
+          token: ${{ github.token }}
       - id: find-python
         run: |
           find-by-extension ".py" > /dev/null

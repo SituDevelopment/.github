@@ -6,13 +6,28 @@ on:
       - main
 
 jobs:
+  find:
+    runs-on: ubuntu-latest
+    outputs:
+      python: ${{ steps.find-python.outputs.result }}
+      web: ${{ steps.find-web.outputs.result }}
+    steps:
+      - id: find-python
+        run: echo "result=${{ hashFiles('**.py') }}" >> "$GITHUB_OUTPUT"
+      - id: find-web
+        run: echo "result=${{ hashFiles('**.cjs, **.css, **.html, **.html.jinja, **.js, **.json, **.jsx, **.md, **.scss, **.ts, **.tsx, **.yaml, **.yml') }}" >> "$GITHUB_OUTPUT"
+
   black:
+    if: needs.find.outputs.python
+    needs: find
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
 
   isort:
+    if: needs.find.outputs.python
+    needs: find
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +37,8 @@ jobs:
           requirements-files: "requirements.txt"
 
   prettier:
+    if: needs.find.outputs.web
+    needs: find
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +51,8 @@ jobs:
         run: prettier --check .
 
   pylint:
+    if: needs.find.outputs.python
+    needs: find
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -20,9 +20,11 @@ jobs:
       - id: find-python
         run: |
           if [ -n $(./find-by-extension ".py") ]; then
-            echo "result=true" >> "$GITHUB_OUTPUT"
+              echo "result=true" >> "$GITHUB_OUTPUT"
+              echo "result=true"
           else
-            echo "result=false" >> "$GITHUB_OUTPUT"
+              echo "result=false" >> "$GITHUB_OUTPUT"
+              echo "result=false"
           fi
       - id: find-web
         run: |

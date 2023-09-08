@@ -13,13 +13,28 @@ jobs:
       web: ${{ steps.find-web.outputs.result }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: "SituDevelopment/automation"
       - id: find-python
-        run: echo "result=${{ hashFiles('**.py') }}" >> "$GITHUB_OUTPUT"
+        run: |
+          find-by-extension ".py" > /dev/null
+          if [ $? -eq 0 ]; then
+            echo "result=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=false" >> "$GITHUB_OUTPUT"
+          fi
       - id: find-web
-        run: echo "result=${{ hashFiles('**.cjs, **.css, **.html, **.html.jinja, **.js, **.json, **.jsx, **.md, **.scss, **.ts, **.tsx, **.yaml, **.yml') }}" >> "$GITHUB_OUTPUT"
+        run: |
+          find-by-extension ".cjs" ".css" ".html" ".html.jinja" ".js" ".json" ".jsx" ".md" ".scss" ".ts" ".tsx" ".yaml" ".yml" > /dev/null
+          if [ $? -eq 0 ]; then
+            echo "result=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=false" >> "$GITHUB_OUTPUT"
+          fi
 
   black:
-    if: needs.find.outputs.python
+    if: fromJSON(needs.find.outputs.python)
     needs: find
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +42,7 @@ jobs:
       - uses: psf/black@stable
 
   isort:
-    if: needs.find.outputs.python
+    if: fromJSON(needs.find.outputs.python)
     needs: find
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +53,7 @@ jobs:
           requirements-files: "requirements.txt"
 
   prettier:
-    if: needs.find.outputs.web
+    if: fromJSON(needs.find.outputs.web)
     needs: find
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +67,7 @@ jobs:
         run: prettier --check .
 
   pylint:
-    if: needs.find.outputs.python
+    if: fromJSON(needs.find.outputs.python)
     needs: find
     runs-on: ubuntu-latest
     steps:

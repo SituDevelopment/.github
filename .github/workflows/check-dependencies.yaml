@@ -1,0 +1,35 @@
+name: Check Dependencies
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - run: |
+          if [[ -f requirements.txt ]]; then
+              pip install -r requirements.txt --platform manylinux2014_x86_64 --only-binary=":all:" --target=dependencies
+          else
+              echo "requirements.txt not found"
+          fi
+
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: |
+          if [[ -f package.json && -f package-lock.json ]]; then
+              npm install
+          else
+              echo "package.json and/or package-lock.json not found"
+          fi

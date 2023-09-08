@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://raw.githubusercontent.com/SituDevelopment/automation/main/find-by-extension -o find-by-extension
+          curl https://raw.githubusercontent.com/SituDevelopment/automation/main/find-by-extension?token=${{ secrets.GITHUB_TOKEN }} -o find-by-extension
           chmod +x find-by-extension
       - id: find-python
         run: |

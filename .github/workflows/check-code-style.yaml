@@ -12,6 +12,7 @@ jobs:
       python: ${{ steps.find-python.outputs.result }}
       web: ${{ steps.find-web.outputs.result }}
     steps:
+      - uses: actions/checkout@v4
       - id: find-python
         run: echo "result=${{ hashFiles('**.py') }}" >> "$GITHUB_OUTPUT"
       - id: find-web

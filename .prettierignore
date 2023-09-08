@@ -3,7 +3,16 @@
 # whitelist
 !**
 
-!*.js
-!*.json
+!*.cjs
 !*.css
 !*.html
+!*.html.jinja
+!*.js
+!*.json
+!*.jsx
+!*.md
+!*.scss
+!*.ts
+!*.tsx
+!*.yaml
+!*.yml

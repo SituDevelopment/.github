@@ -1,9 +1,6 @@
 name: Check Dependencies
 
-on:
-  pull_request:
-    branches:
-      - $default_branch
+on: pull_request
 
 jobs:
   find:

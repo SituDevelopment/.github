@@ -1,6 +1,6 @@
 name: Check Dependencies
 
-on: 
+on:
   - pull_request
   - workflow_call
 

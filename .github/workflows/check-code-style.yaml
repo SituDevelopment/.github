@@ -5,13 +5,20 @@ on:
   - workflow_call
 
 jobs:
+  fetch-properties:
+    uses: ./.github/workflows/fetch-properties.yaml
+
   black:
+    if: fromJSON(needs.fetch-properties.outputs.properties).Python
+    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
 
   isort:
+    if: fromJSON(needs.fetch-properties.outputs.properties).Python
+    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

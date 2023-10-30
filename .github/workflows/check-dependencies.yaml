@@ -5,7 +5,12 @@ on:
   - workflow_call
 
 jobs:
+  fetch-properties:
+    uses: ./.github/workflows/fetch-properties.yaml
+
   pip:
+    if: fromJSON(needs.fetch-properties.outputs.properties).Python
+    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

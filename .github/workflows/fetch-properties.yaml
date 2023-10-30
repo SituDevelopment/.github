@@ -9,6 +9,8 @@ on:
 
 jobs:
   fetch-properties:
+    env:
+      GH_TOKEN: ${{ github.token }}
     name: Generate output
     runs-on: ubuntu-latest
     outputs:

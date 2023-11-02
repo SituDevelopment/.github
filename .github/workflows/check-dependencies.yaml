@@ -9,7 +9,7 @@ jobs:
     uses: ./.github/workflows/fetch-properties.yaml
 
   pip:
-    if: fromJSON(needs.fetch-properties.outputs.properties).Python
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == "Yes" }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:

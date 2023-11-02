@@ -9,7 +9,7 @@ jobs:
     uses: ./.github/workflows/fetch-properties.yaml
 
   black:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == "Yes" }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +17,7 @@ jobs:
       - uses: psf/black@stable
 
   isort:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == "Yes" }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:

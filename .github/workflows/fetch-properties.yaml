@@ -11,6 +11,7 @@ jobs:
   fetch-properties:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     name: Generate output
     runs-on: ubuntu-latest
     outputs:

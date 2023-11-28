@@ -10,7 +10,7 @@ on:
 jobs:
   fetch-properties:
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     name: Generate output
     runs-on: ubuntu-latest
     outputs:

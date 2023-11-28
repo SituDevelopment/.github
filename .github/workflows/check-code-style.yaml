@@ -9,16 +9,12 @@ jobs:
     uses: ./.github/workflows/fetch-properties.yaml
 
   black:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
 
   isort:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

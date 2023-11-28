@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       properties: ${{ steps.fetch-properties.outputs.properties }}
-    permissions: read-all
+    permissions: write-all
     steps:
       - id: fetch-properties
         run: |

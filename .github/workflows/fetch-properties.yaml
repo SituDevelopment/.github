@@ -19,5 +19,6 @@ jobs:
     steps:
       - id: fetch-properties
         run: |
+          echo "$(gh api /repos/${{ github.repository }}/properties/values)"
           properties=$(gh api /repos/${{ github.repository }}/properties/values --jq 'map({(.property_name): .value}) | add')
           echo "properties=${properties}" >> "$GITHUB_OUTPUT"

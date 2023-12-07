@@ -6,8 +6,31 @@ enhancement:
 
 dependencies:
   - changed_files:
-      - any-glob-to-any-file: ["package.json", "package-lock.json"]
+      - any-glob-to-any-file:
+          [
+            "package.json",
+            "package-lock.json",
+            "requirements.txt",
+            "composer.json",
+            "composer.lock",
+          ]
+
+documentation:
+  - changed_files:
+      - any-glob-to-any-file: ["README.md"]
 
 github_actions:
   - changed_files:
       - any-glob-to-any-file: [".github/workflows/*.yaml"]
+
+javascript:
+  - changed_files:
+      - any-glob-to-any-file: ["*.js", "*.ts", "package.json", "package-lock.json"]
+
+php:
+  - changed_files:
+      - any-glob-to-any-file: ["*.php", "composer.json", "composer.lock"]
+
+python:
+  - changed_files:
+      - any-glob-to-any-file: ["*.py", "requirements.txt"]

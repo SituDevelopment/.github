@@ -1,0 +1,33 @@
+name: Add issues and PRs to projects
+
+on:
+  - issues
+  - pull_request
+  - workflow_call
+
+jobs:
+  all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/SituDevelopment/projects/9
+          github-token: ${{ secrets.ADD_TO_PROJECT }}
+
+  bugs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/SituDevelopment/projects/7
+          github-token: ${{ secrets.ADD_TO_PROJECT }}
+          labeled: bug
+
+  enhancements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/SituDevelopment/projects/8
+          github-token: ${{ secrets.ADD_TO_PROJECT }}
+          labeled: enhancement

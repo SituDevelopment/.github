@@ -5,9 +5,32 @@ enhancement:
   - head-branch: ["feature/*"]
 
 dependencies:
-  - changed_files:
-      - any-glob-to-any-file: ["package.json", "package-lock.json"]
+  - changed-files:
+      - any-glob-to-any-file:
+          [
+            "package.json",
+            "package-lock.json",
+            "requirements.txt",
+            "composer.json",
+            "composer.lock",
+          ]
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ["README.md"]
 
 github_actions:
-  - changed_files:
+  - changed-files:
       - any-glob-to-any-file: [".github/workflows/*.yaml"]
+
+javascript:
+  - changed-files:
+      - any-glob-to-any-file: ["*.js", "*.ts", "package.json", "package-lock.json"]
+
+php:
+  - changed-files:
+      - any-glob-to-any-file: ["*.php", "composer.json", "composer.lock"]
+
+python:
+  - changed-files:
+      - any-glob-to-any-file: ["*.py", "requirements.txt"]

@@ -7,7 +7,7 @@ on:
     inputs:
       python-root:
         description: "The root directory of the Python project"
-        required: true
+        required: false
         default: "."
         type: string
 

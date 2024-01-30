@@ -4,23 +4,20 @@ title: "Bug: "
 labels: bug
 
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: A clear and concise description of what the bug is.
+      description: A clear and concise description of the bug.
       placeholder: Bug description
     validations:
       required: true
+
   - type: textarea
     id: reproduce-steps
     attributes:
-      label: To Reproduce
-      description: Steps to reproduce the behavior.
+      label: How To Reproduce
+      description: Please provide a minimal reproducible example or steps to reproduce the behaviour of the bug.
       placeholder: |
         1. Go to '...'
         2. Click on '....'
@@ -28,58 +25,32 @@ body:
         4. See error
     validations:
       required: true
+
   - type: textarea
     id: expected-behavior
     attributes:
-      label: Expected behavior
+      label: Expected Behavior
       description: A clear and concise description of what you expected to happen.
-      placeholder: It should have happened
+      placeholder: It should...
     validations:
       required: true
-  - type: dropdown
-    id: browsers
-    attributes:
-      label: What browser are you seeing the problem on?
-      multiple: true
-      options:
-        - N/A
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
-    validations:
-      required: true
-  - type: dropdown
-    id: operating-systems
-    attributes:
-      label: What operating system / device are you seeing the problem on?
-      multiple: true
-      options:
-        - N/A
-        - Windows
-        - macOS
-        - Linux
-        - iOS
-        - Android
-    validations:
-      required: true
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots
-      description: If applicable, add screenshots to help explain your problem.
-  - type: markdown
-    attributes:
-      value: |
-        ## Optional
+
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context
-      description: Add any other context about the problem here.
+      label: Additional Context
+      description: Please provide any additional details about the bug and its environment.
+      placeholder: |
+        - Do you have relevant screenshots?
+        - Do you have any other information that might be helpful?
+        - Tell us about where you are seeing the problem.
+          - Device
+          - Operating System
+          - Browser
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log Output
+      description: Please enter any relevant output as plain text.
+      render: shell

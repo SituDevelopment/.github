@@ -4,10 +4,6 @@ title: "Feature Request: "
 labels: enhancement
 
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this feature request!
   - type: textarea
     id: problem-description
     attributes:
@@ -16,6 +12,7 @@ body:
       placeholder: Problem description
     validations:
       required: true
+
   - type: textarea
     id: proposed-solution
     attributes:
@@ -24,19 +21,17 @@ body:
       placeholder: Proposed solution
     validations:
       required: true
+
   - type: textarea
     id: alternative-solutions
     attributes:
       label: Alternative Solutions
       description: A clear and concise description of any alternative solutions or features you've considered.
       placeholder: Alternative solutions
-  - type: markdown
-    attributes:
-      value: |
-        ## Optional
+
   - type: textarea
     id: additional-context
     attributes:
       label: Additional Context
-      description: Add any other context or screenshots about the feature request here.
+      description: Please provide any additional details about the feature request.
       placeholder: Additional context

@@ -23,7 +23,6 @@ jobs:
     needs: fetch-properties
     outputs:
       files: ${{ steps.main.outputs.files }}
-      files-with: ${{ steps.main.outputs.files-with }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +32,6 @@ jobs:
           poetry=$([[ -f poetry.lock ]] && echo true || echo false)
           files="{\"pip\": ${pip}, \"poetry\": ${poetry}}"
           echo "files=${files}" | tee --append "${GITHUB_OUTPUT}"
-          echo "files-with=\"${files}\"" | tee --append "${GITHUB_OUTPUT}"
 
   pip:
     if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.files).pip }}
@@ -53,7 +51,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo start "${{ needs.python-dependency-files.outputs.files }}" end
-      - run: echo with start "${{ needs.python-dependency-files.outputs.files-with }}" end
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:

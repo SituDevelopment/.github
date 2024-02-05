@@ -30,9 +30,8 @@ jobs:
         run: |
           pip=$([[ -f requirements.txt ]] && echo true || echo false)
           poetry=$([[ -f poetry.lock ]] && echo true || echo false)
-          echo 'output="{"pip": "'${pip}'", "poetry": "${poetry}"}"' >> "${GITHUB_OUTPUT}"
-          echo ${pip}
-          echo ${poetry}
+          files="{\"pip\": ${pip}, \"poetry\": ${poetry}}"
+          echo 'output=${files}' >> "${GITHUB_OUTPUT}"
 
   pip:
     if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.files).pip }}

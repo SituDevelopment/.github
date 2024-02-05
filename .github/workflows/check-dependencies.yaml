@@ -34,7 +34,7 @@ jobs:
           echo "files=${files}" >> "${GITHUB_OUTPUT}"
 
   pip:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.files).pip == true }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && fromJSON(needs.python-dependency-files.outputs.files).pip == true }}
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:
@@ -47,7 +47,7 @@ jobs:
       - run: pip install -r requirements.txt
 
   poetry:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.files).poetry == true }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && fromJSON(needs.python-dependency-files.outputs.files).poetry == true }}
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:

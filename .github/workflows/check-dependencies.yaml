@@ -30,10 +30,10 @@ jobs:
       - id: main
         run: |
           if [[ -f requirements.txt ]]; then
-            echo "pip=true" >> "${GITHUB_OUTPUT}"
+            echo "pip=true" | tee --append "${GITHUB_OUTPUT}"
           fi
           if [[ -f poetry.lock ]]; then
-            echo "poetry=true" >> "${GITHUB_OUTPUT}"
+            echo "poetry=true" | tee --append "${GITHUB_OUTPUT}"
           fi
 
   pip:

@@ -30,10 +30,7 @@ jobs:
         run: |
           pip=$([[ -f requirements.txt ]] && echo true || echo false)
           poetry=$([[ -f poetry.lock ]] && echo true || echo false)
-          echo 'output={
-            "pip": "'${pip}'",
-            "poetry": "${poetry}"
-          }' >> "${GITHUB_OUTPUT}"
+          echo 'output={"pip": "'${pip}'", "poetry": "${poetry}"}' >> "${GITHUB_OUTPUT}"
           echo ${pip}
           echo ${poetry}
 

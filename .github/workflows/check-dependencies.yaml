@@ -22,8 +22,8 @@ jobs:
     if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     outputs:
-      pip: ${{ steps.main.output.pip }}
-      poetry: ${{ steps.main.output.poetry }}
+      pip: ${{ steps.main.outputs.pip }}
+      poetry: ${{ steps.main.outputs.poetry }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

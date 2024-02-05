@@ -29,15 +29,17 @@ jobs:
       - uses: actions/checkout@v4
       - id: main
         run: |
-          if [[ -f requirements.txt ]]; then
-            echo "pip=true" | tee --append "${GITHUB_OUTPUT}"
-          fi
-          if [[ -f poetry.lock ]]; then
-            echo "poetry=true" | tee --append "${GITHUB_OUTPUT}"
-          fi
+          pip=$([[ -f requirements.txt ]] && echo true || echo false)
+          poetry=$([[ -f poetry.lock ]] && echo true || echo false)
+          echo '{
+            "pip": "'${pip}'",
+            "poetry": "${poetry}"
+          }' >> "${GITHUB_OUTPUT}"
+          echo ${pip}
+          echo ${poetry}
 
   pip:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ needs.python-dependency-files.outputs.pip == 'true' }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.pip) }}
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +51,7 @@ jobs:
       - run: pip install -r requirements.txt
 
   poetry:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ needs.python-dependency-files.outputs.poetry == 'true' }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && ${{ fromJSON(needs.python-dependency-files.outputs.poetry) }}
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:

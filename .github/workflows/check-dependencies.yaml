@@ -19,11 +19,16 @@ jobs:
       - run: npm clean-install
 
   pip:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && hashFiles("requirements.txt")
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          if [ ! -f requirements.txt ]; then
+            echo "No requirements.txt found"
+            exit 0
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10" # trailing zero
@@ -31,11 +36,16 @@ jobs:
       - run: pip install -r requirements.txt
 
   poetry:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }} && hashFiles("poetry.lock")
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          if [ ! -f poetry.lock ]; then
+            echo "No poetry.lock found"
+            exit 0
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10" # trailing zero

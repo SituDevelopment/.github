@@ -38,6 +38,7 @@ jobs:
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ fromJSON(needs.python-dependency-files.outputs.files).pip }}
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -50,6 +51,7 @@ jobs:
     needs: [fetch-properties, python-dependency-files]
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ fromJSON(needs.python-dependency-files.outputs.files).poetry }}
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:

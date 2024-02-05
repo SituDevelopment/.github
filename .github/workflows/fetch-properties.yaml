@@ -4,7 +4,7 @@ on:
   workflow_call:
     outputs:
       properties:
-        description: "Properties JSON"
+        description: Properties JSON
         value: ${{ jobs.fetch-properties.outputs.properties }}
 
 jobs:

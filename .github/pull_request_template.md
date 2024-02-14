@@ -1,3 +1,7 @@
+## Description
+
+Add description here, especially if the linked issue is light on detail.
+
 ## Type of change
 
 -   [ ] Bug fix (non-breaking change which fixes a bug)

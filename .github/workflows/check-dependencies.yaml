@@ -18,37 +18,8 @@ jobs:
           cache: npm
       - run: npm clean-install
 
-  python-dependency-files:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
-    outputs:
-      files: ${{ steps.main.outputs.files }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: main
-        run: |
-          pip=$([[ -f requirements.txt ]] && echo true || echo false)
-          poetry=$([[ -f poetry.lock ]] && echo true || echo false)
-          files="{\"pip\": ${pip}, \"poetry\": ${poetry}}"
-          echo "files=${files}" >> "${GITHUB_OUTPUT}"
-
-  pip:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && fromJSON(needs.python-dependency-files.outputs.files).pip }}
-    needs: [fetch-properties, python-dependency-files]
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ fromJSON(needs.python-dependency-files.outputs.files).pip }}
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.10" # trailing zero
-          cache: pip
-      - run: pip install -r requirements.txt
-
   poetry:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && fromJSON(needs.python-dependency-files.outputs.files).poetry }}
-    needs: [fetch-properties, python-dependency-files]
+    needs: fetch-properties
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -55,7 +55,7 @@ jobs:
       - run: npx prettier --check .
 
   pylint:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && false }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:

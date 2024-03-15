@@ -1,6 +1,5 @@
 name: Chore
 description: Allocate time to address technical debt, maintenance, or other non-feature work
-title: "Chore: "
 labels: chore
 
 body:

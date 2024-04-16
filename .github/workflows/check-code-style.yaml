@@ -43,6 +43,22 @@ jobs:
           configuration: --check-only --diff
           sort-paths: ${{ inputs.python-root }}
 
+  mypy:
+    # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
+    if: ${{ github.actor != 'dependabot[bot]' && fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
+    needs: fetch-properties
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install poetry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10" # trailing zero
+          cache: poetry
+      - run: poetry install
+      - run: source $(poetry env info --path)/bin/activate
+      - run: mypy ${{ inputs.python-root }}
+
   prettier:
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +71,8 @@ jobs:
       - run: npx prettier --check .
 
   pylint:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' && false }}
+    # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
+    if: ${{ github.actor != 'dependabot[bot]' && fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:

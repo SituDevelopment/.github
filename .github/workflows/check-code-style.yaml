@@ -70,8 +70,7 @@ jobs:
       - run: npx prettier --check .
 
   pylint:
-    # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
-    if: ${{ github.actor != 'dependabot[bot]' && fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
+    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
     needs: fetch-properties
     runs-on: ubuntu-latest
     steps:

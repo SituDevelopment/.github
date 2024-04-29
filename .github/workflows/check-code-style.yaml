@@ -56,8 +56,7 @@ jobs:
           python-version: "3.10" # trailing zero
           cache: poetry
       - run: poetry install
-      - run: source $(poetry env info --path)/bin/activate
-      - run: mypy ${{ inputs.python-root }}
+      - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
 
   prettier:
     runs-on: ubuntu-latest
@@ -83,5 +82,4 @@ jobs:
           python-version: "3.10" # trailing zero
           cache: poetry
       - run: poetry install
-      - run: source $(poetry env info --path)/bin/activate
-      - run: pylint --exit-zero ${{ inputs.python-root }}
+      - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}

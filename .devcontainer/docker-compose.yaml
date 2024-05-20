@@ -1,0 +1,14 @@
+name: github-configuration
+services:
+  devcontainer:
+    command: sleep infinity
+    env_file: .env
+    image: ghcr.io/situdevelopment/devcontainer-node-20
+    networks:
+      - network
+    volumes:
+      - ..:/workspaces/.github:cached
+
+networks:
+  network:
+    driver: bridge

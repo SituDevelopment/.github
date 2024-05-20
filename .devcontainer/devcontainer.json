@@ -1,0 +1,6 @@
+{
+    "dockerComposeFile": "docker-compose.yaml",
+    "name": "GitHub Configuration",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}

@@ -14,9 +14,6 @@ on:
         default: true
 
 jobs:
-  all:
-    uses: ./.github/workflows/all.yaml
-
   code-style-black:
     runs-on: ubuntu-latest
     steps:

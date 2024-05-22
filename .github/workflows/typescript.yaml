@@ -3,9 +3,6 @@ name: TypeScript Status Checks
 on: workflow_call
 
 jobs:
-  all:
-    uses: ./.github/workflows/all.yaml
-
   linting-tsc:
     runs-on: ubuntu-latest
     steps:

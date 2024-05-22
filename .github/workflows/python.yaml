@@ -1,8 +1,6 @@
 name: Python Status Checks
 
 on:
-  pull_request:
-    branches: main
   workflow_call:
     inputs:
       python-root:

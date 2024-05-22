@@ -1,9 +1,6 @@
 name: TypeScript Status Checks
 
-on:
-  pull_request:
-    branches: main
-  workflow_call:
+on: workflow_call
 
 jobs:
   linting-tsc:

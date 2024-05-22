@@ -1,4 +1,4 @@
-name: Check Code Style
+name: Python Status Checks
 
 on:
   pull_request:
@@ -7,17 +7,16 @@ on:
     inputs:
       python-root:
         description: The root directory of the Python project
-        required: false
-        default: .
+        required: true
         type: string
+      run-tests:
+        description: Whether to run tests
+        required: false
+        type: boolean
+        default: true
 
 jobs:
-  fetch-properties:
-    uses: ./.github/workflows/fetch-properties.yaml
-
-  black:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
+  code-style-black:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,9 +24,7 @@ jobs:
         with:
           src: ${{ inputs.python-root }}
 
-  isort:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
+  code-style-isort:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,10 +40,21 @@ jobs:
           configuration: --check-only --diff
           sort-paths: ${{ inputs.python-root }}
 
-  mypy:
+  dependencies-poetry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install poetry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10" # trailing zero
+          cache: poetry
+      - run: poetry config virtualenvs.create false
+      - run: poetry install
+
+  linting-mypy:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
-    if: ${{ github.actor != 'dependabot[bot]' && fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,20 +66,7 @@ jobs:
       - run: poetry install
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
 
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
-      - run: npm clean-install
-      - run: npx prettier --check .
-
-  pylint:
-    if: ${{ fromJSON(needs.fetch-properties.outputs.properties).Python == 'Yes' }}
-    needs: fetch-properties
+  linting-pylint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -82,3 +77,20 @@ jobs:
           cache: poetry
       - run: poetry install
       - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}
+
+  testing-pytest:
+    # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
+    if: ${{ github.actor != 'dependabot[bot]' && inputs.run-tests }}
+    environment: testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create .env file from `testing` Environment
+        run: |
+          echo '${{ toJson(secrets) }}' \
+            | jq -r 'to_entries[] | "\(.key)=\(.value)"' > .devcontainer/.env
+          echo 'GITHUB_ACTIONS=true' >> .devcontainer/.env
+      - name: Pytest
+        uses: devcontainers/ci@v0.3.1900000349
+        with:
+          runCmd: pytest --report-passed "" --quiet --pythonwarnings=ignore

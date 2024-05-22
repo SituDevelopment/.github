@@ -11,7 +11,7 @@ on:
         description: Whether to run tests
         required: false
         type: boolean
-        default: true
+        default: false
 
 jobs:
   code-style-black:

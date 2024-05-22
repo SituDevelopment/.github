@@ -1,4 +1,4 @@
-name: Python Status Checks
+name: All Status Checks
 
 on:
   pull_request:

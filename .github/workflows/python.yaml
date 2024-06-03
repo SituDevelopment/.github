@@ -12,6 +12,11 @@ on:
         required: false
         type: boolean
         default: false
+      test-command:
+        description: The command(s) used to run tests
+        required: false
+        type: string
+        default: pytest --quiet --pythonwarnings=ignore
 
 jobs:
   code-style-black:
@@ -91,4 +96,4 @@ jobs:
       - name: Pytest
         uses: devcontainers/ci@v0.3.1900000349
         with:
-          runCmd: pytest --report-passed "" --quiet --pythonwarnings=ignore
+          runCmd: ${{ inputs.test-command }}

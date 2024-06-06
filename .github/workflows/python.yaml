@@ -18,9 +18,12 @@ on:
         type: string
         default: pytest --quiet --pythonwarnings=ignore
 
+env:
+  POETRY_HTTP_BASIC_FURY_USERNAME: ${{ secrets.FURY_TOKEN }}
+  POETRY_HTTP_BASIC_FURY_PASSWORD: "NOPASS"
+
 jobs:
   code-style-black:
-    environment: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +32,6 @@ jobs:
           src: ${{ inputs.python-root }}
 
   code-style-isort:
-    environment: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +48,6 @@ jobs:
           sort-paths: ${{ inputs.python-root }}
 
   dependencies-poetry:
-    environment: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +62,6 @@ jobs:
   linting-mypy:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
     if: ${{ github.actor != 'dependabot[bot]' }}
-    environment: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -74,7 +74,6 @@ jobs:
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
 
   linting-pylint:
-    environment: testing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

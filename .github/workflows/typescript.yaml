@@ -10,6 +10,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          registry-url: 'https://npm.fury.io/situdevelopment/'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FURY_TOKEN }}
       - uses: actions/cache@v4
         with:
           path: |

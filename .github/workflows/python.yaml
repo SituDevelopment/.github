@@ -7,6 +7,11 @@ on:
         description: The root directory of the Python project
         required: true
         type: string
+      python-version:
+        description: The Python version to use
+        required: false
+        type: string
+        default: "3.10" # trailing zero
       run-tests:
         description: Whether to run tests
         required: false
@@ -38,7 +43,7 @@ jobs:
       - run: pip install poetry
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10" # trailing zero
+          python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry config virtualenvs.create false
       - run: poetry install
@@ -54,7 +59,7 @@ jobs:
       - run: pip install poetry
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10" # trailing zero
+          python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry config virtualenvs.create false
       - run: poetry install
@@ -68,7 +73,7 @@ jobs:
       - run: pip install poetry
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10" # trailing zero
+          python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry install
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
@@ -80,7 +85,7 @@ jobs:
       - run: pip install poetry
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10" # trailing zero
+          python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry install
       - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}

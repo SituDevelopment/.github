@@ -18,8 +18,6 @@ jobs:
 
   dependencies-npm:
     runs-on: ubuntu-latest
-    env:
-      FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Ensure .npmrc exists and is configured
@@ -34,6 +32,8 @@ jobs:
           fi
           echo "Contents of .npmrc:"
           cat .npmrc
+        env:
+          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: 18

@@ -13,7 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
       - run: npm install prettier
       - run: npx prettier --check .
 
@@ -26,9 +25,11 @@ jobs:
       - name: Ensure .npmrc exists and is configured
         run: |
           if [ ! -f ".npmrc" ]; then
-            echo "registry=https://npm-proxy.fury.io/situdevelopment/"
-            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" > .npmrc
+            echo "registry=https://npm-proxy.fury.io/situdevelopment/" > .npmrc
+            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" >> .npmrc
           fi
+          echo "Contents of .npmrc:"
+          cat .npmrc
       - uses: actions/setup-node@v4
         with:
           node-version: 18

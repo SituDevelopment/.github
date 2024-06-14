@@ -3,6 +3,11 @@ name: Python Status Checks
 on:
   workflow_call:
     inputs:
+      pyproject-toml-directory:
+        description: The path to a directory containing a `pyproject.toml` file
+        required: false
+        type: string
+        default: .
       python-root:
         description: The root directory of the Python project
         required: true
@@ -47,6 +52,7 @@ jobs:
           cache: poetry
       - run: poetry config virtualenvs.create false
       - run: poetry install
+        working-directory: ${{ inputs.pyproject-toml-directory }}
       - uses: isort/isort-action@v1
         with:
           configuration: --check-only --diff
@@ -63,6 +69,7 @@ jobs:
           cache: poetry
       - run: poetry config virtualenvs.create false
       - run: poetry install
+        working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-mypy:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
@@ -76,6 +83,7 @@ jobs:
           python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry install
+        working-directory: ${{ inputs.pyproject-toml-directory }}
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
 
   linting-pylint:
@@ -88,6 +96,7 @@ jobs:
           python-version: ${{ inputs.python-version }}
           cache: poetry
       - run: poetry install
+        working-directory: ${{ inputs.pyproject-toml-directory }}
       - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}
 
   testing-pytest:

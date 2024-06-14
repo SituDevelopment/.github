@@ -13,38 +13,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: "https://npm-proxy.fury.io/situdevelopment/"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.FURY_TOKEN }}
-      - uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/.npmrc') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm clean-install
-        env:
-          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
+          cache: npm
+      - run: npm install prettier
       - run: npx prettier --check .
 
   dependencies-npm:
     runs-on: ubuntu-latest
+    env:
+      FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: Ensure .npmrc exists and is configured
+        run: |
+          if [ ! -f ".npmrc" ]; then
+            echo "registry=https://npm-proxy.fury.io/situdevelopment/"
+            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" > .npmrc
+          fi
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: "https://npm-proxy.fury.io/situdevelopment/"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.FURY_TOKEN }}
-      - uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/.npmrc') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
       - run: npm clean-install
-        env:
-          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}

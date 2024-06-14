@@ -2,28 +2,18 @@ name: TypeScript Status Checks
 
 on: workflow_call
 
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.FURY_TOKEN }}
+
 jobs:
   linting-tsc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure .npmrc exists and is configured
-        run: |
-          if [ ! -f ".npmrc" ]; then
-            echo "registry=https://npm-proxy.fury.io/situdevelopment/" > .npmrc
-            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" >> .npmrc
-          else
-            # If .npmrc exists, replace the existing ${FURY_TOKEN} placeholder or value.
-            # This does not happen in the github action for node setup.
-            sed -i "s|//npm-proxy.fury.io/situdevelopment/:_authToken=.*|//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}|g" .npmrc
-          fi
-          echo "Contents of .npmrc:"
-          cat .npmrc
-        env:
-          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
+          registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install
       - run: npx tsc --noEmit

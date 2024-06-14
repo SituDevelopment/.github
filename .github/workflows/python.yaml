@@ -85,7 +85,8 @@ jobs:
           cache: poetry
       - run: poetry install
         working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: source $(poetry env info --path)/bin/activate && mypy ${{ env.TARGET }}
+      - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
+        working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-pylint:
     runs-on: ubuntu-latest
@@ -98,7 +99,8 @@ jobs:
           cache: poetry
       - run: poetry install
         working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ env.TARGET }}
+      - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}
+        working-directory: ${{ inputs.pyproject-toml-directory }}
 
   testing-pytest:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.

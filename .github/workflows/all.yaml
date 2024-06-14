@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
-      - run: npm install prettier
+      - run: npm clean-install
       - run: npx prettier --check .
 
   dependencies-npm:

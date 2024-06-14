@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          registry-url: ${{ secrets.NPM_REGISTRY_URL }}
+          registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install
       - run: npx prettier --check .
 
@@ -29,5 +29,5 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          registry-url: ${{ secrets.NPM_REGISTRY_URL }}
+          registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install

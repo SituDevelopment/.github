@@ -12,8 +12,8 @@ jobs:
       - name: Ensure .npmrc exists and is configured
         run: |
           if [ ! -f ".npmrc" ]; then
-            echo "registry=https://npm-proxy.fury.io/situdevelopment/"
-            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" > .npmrc
+            echo "registry=https://npm-proxy.fury.io/situdevelopment/" > .npmrc
+            echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" >> .npmrc
           fi
       - uses: actions/setup-node@v4
         with:

@@ -27,6 +27,10 @@ jobs:
           if [ ! -f ".npmrc" ]; then
             echo "registry=https://npm-proxy.fury.io/situdevelopment/" > .npmrc
             echo "//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}" >> .npmrc
+          else
+            # If .npmrc exists, replace the existing ${FURY_TOKEN} placeholder or value.
+            # This does not happen in the github action for node setup.
+            sed -i "s|//npm-proxy.fury.io/situdevelopment/:_authToken=.*|//npm-proxy.fury.io/situdevelopment/:_authToken=${FURY_TOKEN}|g" .npmrc
           fi
           echo "Contents of .npmrc:"
           cat .npmrc

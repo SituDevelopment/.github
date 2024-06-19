@@ -1,6 +1,13 @@
 name: TypeScript Status Checks
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      ts-config-directory:
+        description: The path to a directory containing a `tsconfig.json` file
+        required: false
+        type: string
+        default: .
 
 env:
   NODE_AUTH_TOKEN: ${{ secrets.FURY_TOKEN }}
@@ -16,4 +23,4 @@ jobs:
           cache: npm
           registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install
-      - run: npx tsc --noEmit
+      - run: npx tsc --noEmit --project ${{ inputs.ts-config-directory }}

@@ -99,7 +99,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-mypy:
-    # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
+    # Do not run for Dependabot PRs as it may block automatic merging.
     if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
@@ -115,6 +115,8 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-pylint:
+    # Do not run for Dependabot PRs as it may block automatic merging.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -125,10 +127,12 @@ jobs:
           cache: poetry
       - run: poetry install
         working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: source $(poetry env info --path)/bin/activate && pylint --exit-zero ${{ inputs.python-root }}
+      - run: source $(poetry env info --path)/bin/activate && pylint ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-ruff:
+    # Do not run for Dependabot PRs as it may block automatic merging.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -143,15 +147,6 @@ jobs:
           source $(poetry env info --path)/bin/activate
           ruff check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
-
-  linting:
-    needs:
-      - linting-pylint
-      - linting-ruff
-    runs-on: ubuntu-latest
-    if: ${{ always() && (needs.linting-ruff.result == 'success' || needs.linting-pylint.result == 'success') }}
-    steps:
-      - run: echo "Linting checks passed."
 
   testing-pytest:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.

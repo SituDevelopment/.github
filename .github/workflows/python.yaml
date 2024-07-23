@@ -141,7 +141,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
       - run: |
           source $(poetry env info --path)/bin/activate
-          ruff lint ${{ inputs.python-root }}
+          ruff check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting:

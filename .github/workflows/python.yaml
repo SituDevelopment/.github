@@ -83,6 +83,8 @@ jobs:
       - code-style-ruff
     runs-on: ubuntu-latest
     if: ${{ needs.code-style-ruff.result == 'success' || (needs.code-style-black.result == 'success' && needs.code-style-isort.result == 'success') }}
+    steps:
+      - run: echo "Code style checks passed."
 
   dependencies-poetry:
     runs-on: ubuntu-latest
@@ -151,6 +153,8 @@ jobs:
       - linting-ruff
     runs-on: ubuntu-latest
     if: ${{ needs.linting-mypy.result == 'success' && (needs.linting-ruff.result == 'success' || needs.linting-pylint.result == 'success') }}
+    steps:
+      - run: echo "Linting checks passed."
 
   testing-pytest:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.

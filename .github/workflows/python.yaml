@@ -68,7 +68,6 @@ jobs:
         with:
           python-version: ${{ inputs.python-version }}
           cache: poetry
-      - run: poetry config virtualenvs.create false
       - run: poetry install
         working-directory: ${{ inputs.pyproject-toml-directory }}
       - run: |
@@ -138,7 +137,6 @@ jobs:
         with:
           python-version: ${{ inputs.python-version }}
           cache: poetry
-      - run: poetry config virtualenvs.create false
       - run: poetry install
         working-directory: ${{ inputs.pyproject-toml-directory }}
       - run: |

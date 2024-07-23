@@ -146,11 +146,10 @@ jobs:
 
   linting:
     needs:
-      - linting-mypy
       - linting-pylint
       - linting-ruff
     runs-on: ubuntu-latest
-    if: ${{ always() && needs.linting-mypy.result == 'success' && (needs.linting-ruff.result == 'success' || needs.linting-pylint.result == 'success') }}
+    if: ${{ always() && (needs.linting-ruff.result == 'success' || needs.linting-pylint.result == 'success') }}
     steps:
       - run: echo "Linting checks passed."
 

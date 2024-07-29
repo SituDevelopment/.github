@@ -34,31 +34,6 @@ env:
   TARGET: ${{ inputs.pyproject-toml-directory }}/${{ inputs.python-root }}
 
 jobs:
-  code-style-black:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          src: ${{ env.TARGET }}
-
-  code-style-isort:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pip install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry config virtualenvs.create false
-      - run: poetry install
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-      - uses: isort/isort-action@v1
-        with:
-          configuration: --check-only --diff
-          sort-paths: ${{ env.TARGET }}
-
   code-style-ruff:
     runs-on: ubuntu-latest
     steps:
@@ -74,16 +49,6 @@ jobs:
           source $(poetry env info --path)/bin/activate
           ruff format --check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
-
-  code-style:
-    needs:
-      - code-style-black
-      - code-style-isort
-      - code-style-ruff
-    runs-on: ubuntu-latest
-    if: ${{ always() && needs.code-style-ruff.result == 'success' || (needs.code-style-black.result == 'success' && needs.code-style-isort.result == 'success') }}
-    steps:
-      - run: echo "Code style checks passed."
 
   dependencies-poetry:
     runs-on: ubuntu-latest
@@ -114,25 +79,7 @@ jobs:
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
-  linting-pylint:
-    # Do not run for Dependabot PRs as it may block automatic merging.
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pip install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry install
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: source $(poetry env info --path)/bin/activate && pylint ${{ inputs.python-root }}
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-
   linting-ruff:
-    # Do not run for Dependabot PRs as it may block automatic merging.
-    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

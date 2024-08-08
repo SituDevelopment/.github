@@ -107,7 +107,7 @@ jobs:
           echo '${{ toJson(secrets) }}' \
             | jq -r 'to_entries[] | "\(.key)=\(.value)"' > .devcontainer/.env
           echo '${{ toJson(env) }}' \
-            | jq -r 'to_entries[] | "\(.key)=\(.value)"' > .devcontainer/.env
+            | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> .devcontainer/.env
           echo 'GITHUB_ACTIONS=true' >> .devcontainer/.env
       - name: Pytest
         uses: devcontainers/ci@v0.3.1900000349

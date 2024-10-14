@@ -35,7 +35,7 @@ env:
 
 jobs:
   code-style-ruff:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
@@ -51,7 +51,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   dependencies-poetry:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
@@ -66,7 +66,7 @@ jobs:
   linting-mypy:
     # Do not run for Dependabot PRs as it may block automatic merging.
     if: ${{ github.actor != 'dependabot[bot]' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
@@ -80,7 +80,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-ruff:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
@@ -99,7 +99,7 @@ jobs:
     # Do not run for Dependabot PRs as it's fragile and may block automatic merging.
     if: ${{ github.actor != 'dependabot[bot]' && inputs.run-tests }}
     environment: testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Create .env file from `testing` Environment

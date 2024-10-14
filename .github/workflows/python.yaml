@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install poetry
+      - run: pipx install poetry
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install poetry
+      - run: pipx install poetry
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install poetry
+      - run: pipx install poetry
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install poetry
+      - run: pipx install poetry
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}

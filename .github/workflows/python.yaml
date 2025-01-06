@@ -79,6 +79,18 @@ jobs:
       - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
+  linting-poetry:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: pipx install poetry
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: poetry
+      - run: poetry check
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
   linting-ruff:
     runs-on: ubuntu-22.04
     steps:

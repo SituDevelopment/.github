@@ -24,8 +24,8 @@ on:
         default: pytest --quiet --pythonwarnings=ignore
 
 env:
-  POETRY_HTTP_BASIC_FURY_USERNAME: ${{ secrets.FURY_TOKEN }}
-  POETRY_HTTP_BASIC_FURY_PASSWORD: "NOPASS"
+  UV_INDEX_FURY_USERNAME: ${{ secrets.FURY_TOKEN }}
+  UV_INDEX_FURY_PASSWORD: "NOPASS"
   TARGET: ${{ inputs.pyproject-toml-directory }}/${{ inputs.python-root }}
 
 jobs:

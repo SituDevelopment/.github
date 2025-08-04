@@ -29,7 +29,7 @@ env:
   TARGET: ${{ inputs.pyproject-toml-directory }}/${{ inputs.python-root }}
 
 jobs:
-  dependencies:
+  dependencies-uv:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

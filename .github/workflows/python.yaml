@@ -90,7 +90,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv python install
-          uv tool install mypy@latest
+          uv sync --all-groups
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Linting
@@ -109,6 +109,7 @@ jobs:
         run: |
           uv python install
           uv tool install ty@latest
+          uv sync --all-groups
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Linting

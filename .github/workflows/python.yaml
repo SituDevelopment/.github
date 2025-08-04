@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv python install
-          uv sync --all-groups
+          uv sync --no-cache --locked --all-groups --no-progress
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   code-style-ruff:
@@ -50,6 +50,14 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
 
       - name: Install dependencies
         run: |
@@ -68,6 +76,14 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+      
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
 
       - name: Install dependencies
         run: |
@@ -87,6 +103,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
+
       - name: Install dependencies
         run: |
           uv python install
@@ -104,6 +128,14 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+
+      - name: Cache uv dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
 
       - name: Install dependencies
         run: |

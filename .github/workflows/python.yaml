@@ -12,11 +12,6 @@ on:
         description: The root directory of the Python project relative to `pyproject-toml-directory`
         required: true
         type: string
-      python-version:
-        description: The Python version to use
-        required: false
-        type: string
-        default: "3.10" # trailing zero
       run-tests:
         description: Whether to run tests
         required: false
@@ -34,77 +29,90 @@ env:
   TARGET: ${{ inputs.pyproject-toml-directory }}/${{ inputs.python-root }}
 
 jobs:
+  dependencies:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv python install
+          uv sync --all-groups
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
   code-style-ruff:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: pipx install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry install
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: |
-          source $(poetry env info --path)/bin/activate
-          ruff format --check ${{ inputs.python-root }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv python install
+          uv tool install ruff@latest
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
-  dependencies-poetry:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - run: pipx install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry config virtualenvs.create false
-      - run: poetry install
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-
-  linting-mypy:
-    # Do not run for Dependabot PRs as it may block automatic merging.
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - run: pipx install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry install
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: source $(poetry env info --path)/bin/activate && mypy ${{ inputs.python-root }}
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-
-  linting-poetry:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - run: pipx install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry check
+      - name: Ruff code style checking
+        run: ruff format --check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-ruff:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: pipx install poetry
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python-version }}
-          cache: poetry
-      - run: poetry install
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv python install
+          uv sync --all-groups
         working-directory: ${{ inputs.pyproject-toml-directory }}
-      - run: |
-          source $(poetry env info --path)/bin/activate
-          ruff check ${{ inputs.python-root }}
+      
+      - name: Ruff linting
+        run: ruff check ${{ inputs.python-root }}
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
+  linting-mypy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv python install
+          uv tool install mypy@latest
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
+      - name: Linting
+        run: mypy ${{ inputs.python-root }}
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
+  linting-ty:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv python install
+          uv tool install ty@latest
+        working-directory: ${{ inputs.pyproject-toml-directory }}
+
+      - name: Linting
+        run: uvx ty check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   testing-pytest:

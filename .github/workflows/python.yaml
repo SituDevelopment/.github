@@ -58,7 +58,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Ruff code style checking
-        run: ruff format --check ${{ inputs.python-root }}
+        run: uvx ruff format --check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-ruff:
@@ -76,7 +76,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Ruff linting
-        run: ruff check ${{ inputs.python-root }}
+        run: uvx ruff check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-mypy:
@@ -94,7 +94,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Linting
-        run: mypy ${{ inputs.python-root }}
+        run: uvx mypy ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-ty:

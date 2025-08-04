@@ -74,7 +74,7 @@ jobs:
           uv python install
           uv sync --all-groups
         working-directory: ${{ inputs.pyproject-toml-directory }}
-      
+
       - name: Ruff linting
         run: ruff check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}

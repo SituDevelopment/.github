@@ -80,7 +80,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   typing-mypy:
-    if: ${{ run-type-checking-mypy }}
+    if: ${{ inputs.run-type-checking-mypy }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   typing-ty:
-    if: ${{ run-type-checking-ty }}
+    if: ${{ inputs.run-type-checking-ty }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

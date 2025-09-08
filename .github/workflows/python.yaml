@@ -17,6 +17,11 @@ on:
         required: false
         type: boolean
         default: false
+      run-mypy:
+        description: Whether to run mypy
+        required: false
+        type: boolean
+        default: true
       test-command:
         description: The command(s) used to run tests
         required: false
@@ -84,6 +89,7 @@ jobs:
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
   linting-mypy:
+    if: ${{ inputs.run-mypy }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

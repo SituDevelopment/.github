@@ -16,7 +16,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
           registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install
       - run: npx prettier --check .
@@ -28,6 +27,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
           registry-url: ${{ secrets.FURY_URL }}
       - run: npm clean-install

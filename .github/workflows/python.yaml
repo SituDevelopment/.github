@@ -17,16 +17,21 @@ on:
         required: false
         type: boolean
         default: false
-      run-mypy:
+      run-type-checking-mypy:
         description: Whether to run mypy
         required: false
         type: boolean
         default: false
-      run-ty:
+      run-type-checking-ty:
         description: Whether to run ty
         required: false
         type: boolean
         default: false
+      run-style-checks:
+        description: Whether to run style checks
+        required: false
+        type: boolean
+        default: true
       test-command:
         description: The command(s) used to run tests
         required: false
@@ -53,7 +58,8 @@ jobs:
           uv sync --no-cache --locked --all-groups --no-progress
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
-  code-style-ruff:
+  style-ruff:
+    if: ${{ inputs.run-style-checks }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -73,28 +79,8 @@ jobs:
         run: uv run ruff format --check ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
-  linting-ruff:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-
-      - name: Install dependencies
-        run: |
-          uv python install
-          uv sync --all-groups --quiet
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-
-      - name: Ruff linting
-        run: uv run ruff check ${{ inputs.python-root }}
-        working-directory: ${{ inputs.pyproject-toml-directory }}
-
-  linting-mypy:
-    if: ${{ inputs.run-mypy }}
+  typing-mypy:
+    if: ${{ run-type-checking-mypy }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -114,8 +100,8 @@ jobs:
         run: uv run mypy ${{ inputs.python-root }}
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
-  linting-ty:
-    if: ${{ inputs.run-ty }}
+  typing-ty:
+    if: ${{ run-type-checking-ty }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

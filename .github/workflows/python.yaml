@@ -115,7 +115,7 @@ jobs:
         run: |
           uv python install
           uv tool install ty@latest
-          uv sync --all-groups --quiet
+          uv sync --all-groups --all-packages --quiet
         working-directory: ${{ inputs.pyproject-toml-directory }}
 
       - name: Linting

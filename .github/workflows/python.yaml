@@ -130,12 +130,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Make ensure env file script executable
-        run: chmod +x .github/scripts/ensure_devcontainer_envs.sh
-
-      - name: Ensure env files referenced by devcontainer docker-compose exist
-        run: .github/scripts/ensure_devcontainer_envs.sh .devcontainer/docker-compose.yaml
-
       - name: Create .env file from `testing` Environment
         run: |
           echo '${{ toJson(secrets) }}' \
@@ -143,6 +137,9 @@ jobs:
           echo '${{ toJson(vars) }}' \
             | jq -r 'if . == null then {} else . end | to_entries[] | "\(.key)=\(.value)"' >> .devcontainer/.env
           echo 'GITHUB_ACTIONS=true' >> .devcontainer/.env
+
+      - name: Create .env files referenced in specific repos - Integro
+        run: touch .devcontainer/.env.sync
 
       - name: Pytest
         uses: devcontainers/ci@v0.3.1900000417

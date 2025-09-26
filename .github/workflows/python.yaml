@@ -131,10 +131,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Make ensure env file script executable
-        run: chmod +x .github/scripts/ensure_devcontainer_envs_simple.sh
+        run: chmod +x .github/scripts/ensure_devcontainer_envs.sh
 
       - name: Ensure env files referenced by devcontainer docker-compose exist
-        run: .github/scripts/ensure_devcontainer_envs_simple.sh .devcontainer/docker-compose.yaml
+        run: .github/scripts/ensure_devcontainer_envs.sh .devcontainer/docker-compose.yaml
 
       - name: Create .env file from `testing` Environment
         run: |
